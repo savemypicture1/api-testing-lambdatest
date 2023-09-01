@@ -78,7 +78,9 @@ class LambdatestService:
     def yaml_to_json(self, input_str: str) -> str:
         response = self._send_request("yaml-to-json", "yaml-str", input_str).json()["data"]
 
-        allure.attach(input_str, "Input YAML", allure.attachment_type.YAML)
-        allure.attach(response, "Output JSON", allure.attachment_type.JSON)
+        response_str = dict_to_json(response)
 
-        return dict_to_json(response)
+        allure.attach(input_str, "Input YAML", allure.attachment_type.YAML)
+        allure.attach(response_str, "Output JSON", allure.attachment_type.JSON)
+
+        return response_str
